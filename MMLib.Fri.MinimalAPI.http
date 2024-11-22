@@ -1,0 +1,6 @@
+@MMLib.Fri.MinimalAPI_HostAddress = http://localhost:5152
+
+GET {{MMLib.Fri.MinimalAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
