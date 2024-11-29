@@ -1,4 +1,3 @@
-
 - [ ] Vytvor projekt cez dotnet cli
 - [ ] Vyhod co tam je - minimalny funkčný projekt
 - [ ] Prečo použiť minimal API?
@@ -25,10 +24,11 @@
 - [ ] Middlewares
   - [ ] Output cache
   - [ ] Rate limiting
+  - [ ] Vlastný middleware
 - [ ] Architektúra
   - [ ] Ukázať ako to môže byť organizované
 
-``` csharp
+```csharp
 services.AddRateLimiter(limiterOptions =>
 {
     limiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -41,10 +41,22 @@ services.AddRateLimiter(limiterOptions =>
 });
 ```
 
-``` csharp
+```csharp
 services.AddOutputCache(options =>
 {
     options.AddPolicy("Expire5", builder =>
         builder.Expire(TimeSpan.FromSeconds(5)));
+});
+```
+
+```csharp
+app.Use(async (context, next) =>
+{
+    var watch = Stopwatch.StartNew();
+
+    await next();
+
+    watch.Stop();
+    app.Logger.LogInformation("Request {Method} {Path} took {Duration}ms", context.Request.Method, context.Request.Path, watch.ElapsedMilliseconds);
 });
 ```

@@ -1,3 +1,4 @@
+using MMLib.Fri.MinimalAPI;
 using MMLib.Fri.MinimalAPI.Features.Contacts;
 using Scalar.AspNetCore;
 
@@ -9,7 +10,10 @@ builder.Services.AddContacts();
 
 var app = builder.Build();
 
+app.UseRequestTiming();
+
 app.UseOutputCache();
+
 app.MapOpenApi();
 app.MapScalarApiReference();
 
