@@ -9,8 +9,11 @@ builder.Services.AddContacts();
 
 var app = builder.Build();
 
+app.UseOutputCache();
 app.MapOpenApi();
 app.MapScalarApiReference();
+
+app.UseRateLimiter();
 
 app.MapContacts();
 

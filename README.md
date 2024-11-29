@@ -18,3 +18,33 @@
   - [ ] pridaj Scalar
   - [ ] pridaj description
   - [ ] prečo tam už je info o 400?
+- [ ] Query parameter
+  - [ ] search endpoint
+- [ ] Header parameter
+  - [ ] Kešovanie
+- [ ] Middlewares
+  - [ ] Output cache
+  - [ ] Rate limiting
+- [ ] Architektúra
+  - [ ] Ukázať ako to môže byť organizované
+
+``` csharp
+services.AddRateLimiter(limiterOptions =>
+{
+    limiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    limiterOptions.AddFixedWindowLimiter(policyName: "fixed", options =>
+    {
+        options.PermitLimit = 2;
+        //options.QueueLimit = 2;
+        options.Window = TimeSpan.FromSeconds(10);
+    });
+});
+```
+
+``` csharp
+services.AddOutputCache(options =>
+{
+    options.AddPolicy("Expire5", builder =>
+        builder.Expire(TimeSpan.FromSeconds(5)));
+});
+```

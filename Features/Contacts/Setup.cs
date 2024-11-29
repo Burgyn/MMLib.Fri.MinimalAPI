@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace MMLib.Fri.MinimalAPI.Features.Contacts;
 
@@ -10,6 +11,22 @@ public static class Setup
         services.AddScoped<IValidator<UpdateContactRequest.UpdateContact>, UpdateContactRequest.UpdateContactValidator>();
         services.AddScoped<IValidator<CreateContactRequest.CreateContact>, CreateContactRequest.CreateContactValidator>();
 
+        services.AddRateLimiter(limiterOptions =>
+        {
+            limiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            limiterOptions.AddFixedWindowLimiter(policyName: "fixed", options =>
+            {
+                options.PermitLimit = 2;
+                options.Window = TimeSpan.FromSeconds(10);
+            });
+        });
+
+        services.AddOutputCache(options =>
+        {
+            options.AddPolicy("Expire5", builder =>
+                builder.Expire(TimeSpan.FromSeconds(5)));
+        });
+
         return services;
     }
 
@@ -19,8 +36,12 @@ public static class Setup
             .WithTags("Contacts");
 
         group.MapContactsGet();
-        group.MapContactGet();
-        group.MapContactPost();
+        group.MapContactGet()
+            .CacheOutput("Expire5");
+        group.MapContactPost()
+            .RequireRateLimiting("fixed")
+            .ProducesProblem(StatusCodes.Status429TooManyRequests);
+
         group.MapContactPut();
         group.MapContactDelete();
 

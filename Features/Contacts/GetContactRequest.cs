@@ -8,8 +8,9 @@ public static class GetContactRequest
         => endpoints.MapGet("/{id}", OnGet)
             .WithDescription("Get a contact by id");
 
-    private static Results<Ok<Contact>, NotFound> OnGet(int id, IContactRepository repository)
+    private static async Task<Results<Ok<Contact>, NotFound>> OnGet(int id, IContactRepository repository)
     {
+        await Task.Delay(1000);
         var contact = repository.GetById(id);
         return contact is null ? TypedResults.NotFound() : TypedResults.Ok(contact);
     }
