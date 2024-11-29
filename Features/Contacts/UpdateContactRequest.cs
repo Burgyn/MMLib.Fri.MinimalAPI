@@ -27,7 +27,7 @@ public static class UpdateContactRequest
 
     public static IEndpointConventionBuilder MapContactPut(this IEndpointRouteBuilder endpoints)
         => endpoints.MapPut("/{id}", OnPut)
-        .WithValidation<UpdateContactValidator>()
+        .WithValidation<UpdateContact>()
         .WithDescription("Update a contact");
 
     static async Task<Results<Ok<Contact>, NotFound>> OnPut(int id, UpdateContact request, IContactRepository repository)

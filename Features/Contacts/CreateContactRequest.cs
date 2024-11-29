@@ -27,7 +27,7 @@ public static class CreateContactRequest
 
     public static IEndpointConventionBuilder MapContactPost(this IEndpointRouteBuilder endpoints)
         => endpoints.MapPost("/", OnPost)
-        .WithValidation<CreateContactValidator>()
+        .WithValidation<CreateContact>()
         .WithDescription("Create a new contact");
 
     static async Task<Results<Created<Contact>, BadRequest>> OnPost(CreateContact request, IContactRepository repository)
