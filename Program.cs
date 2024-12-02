@@ -10,6 +10,8 @@ builder.Services.AddContacts();
 
 var app = builder.Build();
 
+app.UseCors("AllowAll");
+
 app.UseRequestTiming();
 
 app.UseOutputCache();

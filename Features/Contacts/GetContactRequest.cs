@@ -10,7 +10,7 @@ public static class GetContactRequest
 
     private static async Task<Results<Ok<Contact>, NotFound>> OnGet(int id, IContactRepository repository)
     {
-        await Task.Delay(1000);
+        await Task.Delay(10);
         var contact = repository.GetById(id);
         return contact is null ? TypedResults.NotFound() : TypedResults.Ok(contact);
     }

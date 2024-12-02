@@ -27,6 +27,16 @@ public static class Setup
                 builder.Expire(TimeSpan.FromSeconds(5)));
         });
 
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
+
         return services;
     }
 

@@ -1,8 +1,11 @@
 - [ ] Vytvor projekt cez dotnet cli
 - [ ] Vyhod co tam je - minimalny funkčný projekt
-- [ ] Prečo použiť minimal API?
-  - [ ] Pridaj len get na staticky text
+- [ ] Pridaj len get na staticky text
 - [ ] Ukáž v prehliadači, vysvetli že dlho si clovek nevystačí
+  - [ ] Prečo použiť minimal API?
+  - [ ] Rýchlosť učenia
+  - [ ] Rýchlosť aplikácie
+  - [ ] Kompilačná vec
 - [ ] Vytvor triedu Contact
 - [ ] Vytvor dummy data
 - [ ] Vytvor všetky endpointy ale inplace
@@ -17,8 +20,6 @@
   - [ ] pridaj Scalar
   - [ ] pridaj description
   - [ ] prečo tam už je info o 400?
-- [ ] Query parameter
-  - [ ] search endpoint
 - [ ] Header parameter
   - [ ] Kešovanie
 - [ ] Middlewares
